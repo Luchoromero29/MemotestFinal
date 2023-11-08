@@ -5,9 +5,18 @@ const INTENTOS = document.getElementById("intentos")
 const BOTON_INICIO =document.getElementById("boton-inicio")
 const BOTON_RESTART =document.getElementById("boton-restart")
 const TIEMPO = document.getElementById("tiempo")
-let puntuacion = 1000;
+const REGISTRO = document.getElementById("registro");
+const BOTON_REGISTRO = document.getElementById("boton-registro")
+const INPUT_NOMBRE = document.getElementById("input-nombre")
+const ERROR = document.getElementById("nombre-existente")
+const BOTON_CAMBIAR_JUGADOR =document.getElementById("boton-cambiarJugador")
+const RECORD_NOMBRE =document.getElementById("record-nombre")
+const RECORD_PUNTOS = document.getElementById("record-puntos")
 
-const jugador = {nombre: "", puntuacion: ""}
+const ls = localStorage;
+let puntuacion = 1000;
+const jugador = {nombre: "", puntuacion: 0}
+let reinicio = false;
 
 const imagenes = [
     {id: 0, url: "imagenes/banana.svg", click: false},
@@ -41,15 +50,48 @@ document.addEventListener("DOMContentLoaded",() => {
     agregarEventos()
     desabilitarBotones();
     actualizarScore()
+    visible(REGISTRO);
+    inicioRegistro();
+    actualizarRecord();
 
     BOTON_INICIO.addEventListener("click",()=>{
+        
         habilitarBotones()
         actualizarScore()
         cronometro();
     })
 
-    BOTON_RESTART.addEventListener("click",() => {location.reload()})
+    BOTON_RESTART.addEventListener("click",() => {
+        reiniciarJuego();
+        TIEMPO.innerHTML = "Tiempo restante: 0"
+        reinicio = true;
+    })
+
+    BOTON_CAMBIAR_JUGADOR.addEventListener("click", () => {
+        inicioRegistro();
+        
+    })
 }); 
+
+const reiniciarJuego = () => {
+    mezclarCasillas();
+    crearCasillas();
+    agregarEventos();
+    desabilitarBotones();
+    intentos= 0
+    aciertos = 0
+    reinicio = true;
+    actualizarScore();
+    par= [];
+    time = 46;
+
+    for (const boton of CASILLAS_BOTON) {
+        boton.classList.add("hidden")   
+    }
+    for (const imagen of imagenes) {
+        imagen.click = false;
+    }
+}
 
 const mezclarCasillas = () => {
     for (let i = 0 ; i < imagenes.length ; i++){
@@ -63,6 +105,7 @@ const mezclarCasillas = () => {
     
 
 const crearCasillas = () => {
+    tablero.innerHTML = "";
     for (const imagen of imagenes) {
         let div = document.createElement("div");
         div.innerHTML = `<button id="${imagen.id}" class="casilla-button hidden">
@@ -84,8 +127,7 @@ const juego = (boton) => {
     
     const elemento = imagenes.find(elemento => elemento.id == boton.id)
     const index = imagenes.indexOf(elemento)
-    console.log(ACIERTOS);
-    console.log(INTENTOS);
+
     
     //verifico que el id no este en el par y que no se haya revelado
     if(!incluido(par,elemento.id) && elemento.click === false){
@@ -128,8 +170,23 @@ const juego = (boton) => {
         if (termino()){
             setTimeout(() => {
                 calculoPuntos()
-                alert(`!GANASTE, hiciste ${puntuacion} puntos`)
-            location.reload;
+                if(ls.getItem(jugador.nombre)){
+                    if(ls.getItem(jugador.nombre) < jugador.puntuacion){
+                        ls.setItem(jugador.nombre , jugador.puntuacion)
+                    }
+                }else{
+                    ls.setItem(jugador.nombre , jugador.puntuacion)
+                }
+                Swal.fire({
+                    title: "GANASTE!",
+                    text: `Hiciste ${jugador.puntuacion} puntos`,
+                    icon: "success",
+                    showConfirmButton: true,
+                });
+                
+                reiniciarJuego();
+                actualizarRecord();
+            
         }, 200);
         }
     }
@@ -175,20 +232,72 @@ const actualizarScore = () => {
 }
 
 const cronometro = () => {
-    
+    let intervalo = setInterval(() => {
 
-    setInterval(() => {
+        if(reinicio){
+            console.log("reinicio");
+            clearInterval(intervalo);
+            reinicio=false
+            time = 46;
+        }
+        if(time == 0){
+            time = 46;
+            clearInterval(intervalo);
+            Swal.fire({
+                title: "PERDISTE :(",
+                text: `Se te acabo el tiempo`,
+                icon: "error",
+                showConfirmButton: true,
+            });
+            reiniciarJuego()
+        }
         --time;
         TIEMPO.innerHTML = `Tiempo restante: ${time} segundos`
-
-        if(time == 0){
-            alert("se te acabo el tiempo crack")
-            location.reload();
-        }
     },1000)
 }
 
 const calculoPuntos = () => {
-    puntuacion = (puntuacion * time)/intentos
+    jugador.puntuacion = Math.floor((puntuacion * time)/intentos)
 }
 
+const visible = (algo) => {
+    algo.classList.remove("hidden-registro");
+}
+const invisible = (algo) =>{
+    algo.classList.add("hidden-registro")
+}
+
+const inicioRegistro = () => {
+
+    
+    visible(REGISTRO);
+    invisible(ERROR);
+    BOTON_REGISTRO.addEventListener("click", (event) => {
+        event.preventDefault();
+        let permitido = true
+        if(INPUT_NOMBRE.value == "" || INPUT_NOMBRE.value == null ){
+            ERROR.innerHTML = "Debe ingresar un nombre"
+            visible(ERROR)
+        }else{
+                jugador.nombre = INPUT_NOMBRE.value
+                invisible(REGISTRO);
+        }
+    })
+}
+
+const actualizarRecord = () => {
+    let puntosMax = 0
+    let index
+    let keyMax
+    for (let i = 0 ; i < ls.length ; i++){
+        let key = ls.key(i);
+        if (Number(ls.getItem(key)) > puntosMax){
+            puntosMax = ls.getItem(key);
+            index = i;
+            keyMax = key;
+        }
+    }
+    
+    RECORD_NOMBRE.innerHTML = `Nombre: ${ls.key(index)}`
+    RECORD_PUNTOS.innerHTML = `Puntos: ${ls.getItem(keyMax)}`
+}

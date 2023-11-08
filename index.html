@@ -21,8 +21,8 @@
             <div class="score-record">
                 <h1 id="recordLocal">RECORD LOCAL </h1>
                 <div class="score-record-info">
-                    <p>nombre</p>
-                    <p>puntos</p>
+                    <p id="record-nombre">Nombre</p>
+                    <p id="record-puntos">Puntos</p>
                 </div>
                 
             </div>
@@ -32,13 +32,29 @@
             <div class="botonera">
                 <button id="boton-inicio">Iniciar Juego</button>
                 <button id="boton-restart">Reiniciar Juego</button>
-                <button >Cambiar jugador</button>
+                <button id="boton-cambiarJugador">Cambiar jugador</button>
             </div>
             
         </div>
         
     </div>
 
+    <div id="registro" class="registro">
+        <div class="container-registro">
+            <div class="tarjeta">
+                <h1>Bienvenido al Memotest</h1>
+                <p>Ingresa tu nombre para registrar tus puntos</p>
+                <form class="formulario">
+                    <label>
+                        <input type="text" placeholder="Nombre" id="input-nombre">
+                    </label>
+                    <p id="nombre-existente" class="error"></p>
+                    <button id="boton-registro"> JUGAR </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

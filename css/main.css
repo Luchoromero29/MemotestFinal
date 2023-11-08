@@ -22,63 +22,10 @@ body{
 .container{
     display: flex;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 1000px;
     border-radius: 10px;
     background-color: rgb(34, 34, 34);
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.488);
-}
-
-.score{
-    color: aliceblue;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-}
-
-.score p{
-    margin: 0;
-}
-
-.score button{
-    width: 10vw;
-    min-width: 100px;
-    padding: 0;
-    padding: 5px 15px 5px 15px;
-}
-
-.score h1 {
-    margin: 0;
-}
-
-.score-record{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.score-record-info{
-    display: flex;
-    flex-direction: column;
-}
-.botonera{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px
-}
-.botonera button{
-    border: none;
-    background-color: rgb(0, 0, 0);
-    border-radius: 5px;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.472);
-    font-weight: 700px;
-    font-size: 16px;
-    color: aliceblue;
-    cursor: pointer;
 }
 
 .tablero{
@@ -126,6 +73,132 @@ body{
     visibility: hidden;
 }
 
+.hidden-registro{
+    visibility: hidden;
+}
+
+
+.score{
+    color: aliceblue;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.score p{
+    margin: 0;
+}
+
+.score button{
+    width: 10vw;
+    min-width: 100px;
+    padding: 0;
+    padding: 5px 15px 5px 15px;
+}
+
+.score h1 {
+    margin: 0;
+}
+
+.score-record{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: black;
+    border-radius: 5px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.472);
+    padding: 10px;
+}
+
+.score-record-info{
+    display: flex;
+    flex-direction: column;
+}
+.botonera{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+}
+.botonera button{
+    border: none;
+    background-color: rgb(0, 0, 0);
+    border-radius: 5px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.472);
+    font-weight: 700px;
+    font-size: 16px;
+    color: aliceblue;
+    cursor: pointer;
+}
+.registro{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    background-color: rgba(175, 175, 175, 0.387);
+}
+
+.container-registro{
+    background-color: darkslateblue;
+    color: white;
+    padding: 3cap;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 450px;
+    height: auto
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.783) ;
+}
+.tarjeta{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    text-align: center;
+}
+
+.tarjeta h1{
+    margin: 0;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+}
+.formulario input{
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.783) ;
+}
+
+.formulario input:focus{
+    outline: none;
+}
+.formulario button{
+    padding: 10px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    font-family: "Signika Negative";
+    font-weight: 900;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.783) ;
+}
+
+.error{
+    color: rgb(255, 0, 0);
+    font-weight: 700;
+}
+
+
 @media only screen and (max-width: 768px) {
     .container{
         flex-direction: column-reverse;
@@ -138,11 +211,21 @@ body{
     }
     .botonera{
         flex-direction: row;
+        
     }
+    
 }
 
 @media only screen and (max-width: 600px) {
     .casilla{
         padding: 4px;
+    }
+    .botonera button{
+        min-width: 80px;
+        font-size: 10px;
+    }
+    .container-registro{
+        width: 300px;
+        height: auto;
     }
 }
