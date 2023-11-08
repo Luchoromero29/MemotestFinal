@@ -1,0 +1,148 @@
+@import "grid.css";
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    font-family: "Signika Negative";
+    
+}
+.title{
+    font-size: 52px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    border-radius: 10px;
+    background-color: rgb(34, 34, 34);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.488);
+}
+
+.score{
+    color: aliceblue;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.score p{
+    margin: 0;
+}
+
+.score button{
+    width: 10vw;
+    min-width: 100px;
+    padding: 0;
+    padding: 5px 15px 5px 15px;
+}
+
+.score h1 {
+    margin: 0;
+}
+
+.score-record{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.score-record-info{
+    display: flex;
+    flex-direction: column;
+}
+.botonera{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+}
+.botonera button{
+    border: none;
+    background-color: rgb(0, 0, 0);
+    border-radius: 5px;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.472);
+    font-weight: 700px;
+    font-size: 16px;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.tablero{
+    box-sizing: border-box;
+    
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+    padding: 15px;
+    height: auto;
+    grid-template-rows: 1fr;
+}
+
+.casilla{
+    padding: 10px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    box-shadow: 0px 2px 3px rgb(255, 255, 255);
+}
+
+.casilla-button img{
+    width: 100%;
+    max-width: 200px;
+    
+}
+
+
+.casilla-button{
+    padding: 0;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    transition: 0.2s;
+    border-radius: 5px;
+}
+
+.blur{
+    background-color: rgb(209, 209, 209);
+    transition: 0.2s;
+}
+
+.hidden img{
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 768px) {
+    .container{
+        flex-direction: column-reverse;
+        box-sizing: content-box
+    }
+
+    .tablero{
+        gap:10px;
+        padding: 10px
+    }
+    .botonera{
+        flex-direction: row;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .casilla{
+        padding: 4px;
+    }
+}
