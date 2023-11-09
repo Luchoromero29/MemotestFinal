@@ -59,12 +59,16 @@ document.addEventListener("DOMContentLoaded",() => {
         habilitarBotones()
         actualizarScore()
         cronometro();
+        bloquearBoton(BOTON_INICIO);
+        bloquearBoton(BOTON_CAMBIAR_JUGADOR)
     })
 
     BOTON_RESTART.addEventListener("click",() => {
         reiniciarJuego();
         TIEMPO.innerHTML = "Tiempo restante: 0"
         reinicio = true;
+        desbloquearBoton(BOTON_INICIO)
+        desbloquearBoton(BOTON_CAMBIAR_JUGADOR)
     })
 
     BOTON_CAMBIAR_JUGADOR.addEventListener("click", () => {
@@ -78,6 +82,8 @@ const reiniciarJuego = () => {
     crearCasillas();
     agregarEventos();
     desabilitarBotones();
+    desbloquearBoton(BOTON_INICIO)
+    desbloquearBoton(BOTON_CAMBIAR_JUGADOR)
     intentos= 0
     aciertos = 0
     reinicio = true;
@@ -159,7 +165,7 @@ const juego = (boton) => {
                     imagenes[par[1].index].click = false;
                     par= []
                     habilitarBotones()
-                }, 700)   
+                }, 500)   
             }
             intentos++;
             actualizarScore();
@@ -235,10 +241,9 @@ const cronometro = () => {
     let intervalo = setInterval(() => {
 
         if(reinicio){
-            console.log("reinicio");
-            clearInterval(intervalo);
             reinicio=false
             time = 46;
+            clearInterval(intervalo);
         }
         if(time == 0){
             time = 46;
@@ -300,4 +305,12 @@ const actualizarRecord = () => {
     
     RECORD_NOMBRE.innerHTML = `Nombre: ${ls.key(index)}`
     RECORD_PUNTOS.innerHTML = `Puntos: ${ls.getItem(keyMax)}`
+}
+
+const bloquearBoton = (boton) => {
+    boton.disabled = true;
+}
+
+const desbloquearBoton = (boton) => {
+    boton.disabled = false
 }
