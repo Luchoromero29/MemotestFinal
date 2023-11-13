@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded",() => {
         cronometro();
         bloquearBoton(BOTON_INICIO);
         bloquearBoton(BOTON_CAMBIAR_JUGADOR)
+        desbloquearBoton(BOTON_RESTART);
     })
 
     BOTON_RESTART.addEventListener("click",() => {
@@ -69,6 +70,7 @@ document.addEventListener("DOMContentLoaded",() => {
         reinicio = true;
         desbloquearBoton(BOTON_INICIO)
         desbloquearBoton(BOTON_CAMBIAR_JUGADOR)
+        bloquearBoton(BOTON_RESTART);
     })
 
     BOTON_CAMBIAR_JUGADOR.addEventListener("click", () => {
@@ -86,10 +88,10 @@ const reiniciarJuego = () => {
     desbloquearBoton(BOTON_CAMBIAR_JUGADOR)
     intentos= 0
     aciertos = 0
-    reinicio = true;
+    reinicio = false;
     actualizarScore();
     par= [];
-    time = 46;
+    
 
     for (const boton of CASILLAS_BOTON) {
         boton.classList.add("hidden")   
@@ -238,6 +240,7 @@ const actualizarScore = () => {
 }
 
 const cronometro = () => {
+    time = 45;
     let intervalo = setInterval(() => {
 
         if(reinicio){
