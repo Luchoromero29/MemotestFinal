@@ -37,6 +37,7 @@ const imagenes = [
     {id: 15, url: "imagenes/naranja.svg", click: false}
 ]
 
+let gano = false;
 let par = [];
 let aciertos = 0;
 let intentos = 0;
@@ -62,6 +63,7 @@ document.addEventListener("DOMContentLoaded",() => {
         bloquearBoton(BOTON_INICIO);
         bloquearBoton(BOTON_CAMBIAR_JUGADOR)
         desbloquearBoton(BOTON_RESTART);
+        gano = false;
     })
 
     BOTON_RESTART.addEventListener("click",() => {
@@ -90,6 +92,7 @@ const reiniciarJuego = () => {
     aciertos = 0
     reinicio = false;
     actualizarScore();
+    time = 45;
     par= [];
     
 
@@ -177,6 +180,7 @@ const juego = (boton) => {
         //revision de terminacion
         if (termino()){
             setTimeout(() => {
+                gano = true;
                 calculoPuntos()
                 if(ls.getItem(jugador.nombre)){
                     if(ls.getItem(jugador.nombre) < jugador.puntuacion){
@@ -243,7 +247,7 @@ const cronometro = () => {
     time = 45;
     let intervalo = setInterval(() => {
 
-        if(reinicio){
+        if(reinicio || gano){
             reinicio=false
             time = 46;
             clearInterval(intervalo);
